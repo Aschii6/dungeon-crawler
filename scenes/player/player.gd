@@ -38,9 +38,9 @@ func _process_movement() -> void:
 		velocity = lerp(velocity, Vector2.ZERO, 0.45)
 	
 	if current_state != STATE.SWORD_SWING:
-		if velocity.x < 0:
+		if velocity.x < -1e-2:
 			animated_sprite_2d.flip_h = true
-		elif velocity.x > 0:
+		elif velocity.x > 1e-2:
 			animated_sprite_2d.flip_h = false
 	
 	if current_state == STATE.IDLE and not velocity.is_zero_approx():
