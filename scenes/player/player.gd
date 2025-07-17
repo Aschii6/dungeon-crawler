@@ -2,6 +2,8 @@ class_name Player
 extends CharacterBody2D
 
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sword_right_collision_shape_2d: CollisionShape2D = $HitboxComp/SwordRightCollisionShape2D
+@onready var sword_left_collision_shape_2d: CollisionShape2D = $HitboxComp/SwordLeftCollisionShape2D
 
 const SPEED = 90.0
 
@@ -15,6 +17,9 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("attack"):
 		_launch_attack()
+	
+	if current_state == STATE.SWORD_SWING:
+		_process_sword_swing()
 
 	move_and_slide()
 
@@ -59,14 +64,22 @@ func _launch_attack() -> void:
 	animated_sprite_2d.play("sword_swing")
 	await animated_sprite_2d.animation_finished
 	_finish_attack()
-	#animated_sprite_2d.animation_finished.connect(_finish_attack)
 
 func _finish_attack() -> void:
 	speed_debuff = 1
-	#animated_sprite_2d.animation_finished.disconnect(_finish_attack)
 	if velocity.is_zero_approx():
 		current_state = STATE.IDLE
 		animated_sprite_2d.play("idle")
 	else:
 		current_state = STATE.WALK
 		animated_sprite_2d.play("walk")
+
+func _process_sword_swing() -> void:
+	if animated_sprite_2d.frame == 3 or animated_sprite_2d.frame == 4:
+		if animated_sprite_2d.flip_h == true:
+			sword_left_collision_shape_2d.disabled = false
+		else:
+			sword_right_collision_shape_2d.disabled = false
+	else:
+		sword_left_collision_shape_2d.disabled = true
+		sword_right_collision_shape_2d.disabled = true

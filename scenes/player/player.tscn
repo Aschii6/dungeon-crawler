@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://b3cnu0dlr6lf2"]
+[gd_scene load_steps=32 format=3 uid="uid://b3cnu0dlr6lf2"]
 
 [ext_resource type="Texture2D" uid="uid://cxk428dyp8wfa" path="res://scenes/player/assets/Soldier.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://c8m0p8dc0ffyt" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="Script" uid="uid://cd3vbeburlqhc" path="res://scenes/components/hitbox_comp.gd" id="3_gmlin"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dovo2"]
 atlas = ExtResource("1_8afob")
@@ -197,16 +198,38 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j4nxn"]
 size = Vector2(14, 18)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
+size = Vector2(21, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlin"]
+size = Vector2(21, 22)
+
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_dovo2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6cv16")
-animation = &"idle"
+animation = &"sword_swing"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-1, -2)
 shape = SubResource("RectangleShape2D_j4nxn")
+debug_color = Color(0, 0.595, 0.7, 0.215686)
+
+[node name="HitboxComp" type="Area2D" parent="."]
+script = ExtResource("3_gmlin")
+metadata/_custom_type_script = "uid://cd3vbeburlqhc"
+
+[node name="SwordRightCollisionShape2D" type="CollisionShape2D" parent="HitboxComp"]
+position = Vector2(10.5, 0)
+shape = SubResource("RectangleShape2D_dovo2")
+disabled = true
+debug_color = Color(0.7, 0, 0, 0.215686)
+
+[node name="SwordLeftCollisionShape2D" type="CollisionShape2D" parent="HitboxComp"]
+position = Vector2(-10.5, 0)
+shape = SubResource("RectangleShape2D_gmlin")
+disabled = true
+debug_color = Color(0.7, 0, 0, 0.215686)
