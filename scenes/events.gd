@@ -1,4 +1,4 @@
 extends Node
 
 
-signal room_change(new_room_pos: Vector2i, side_entered: int)
+signal room_change(new_room: Room, side_entered: int)

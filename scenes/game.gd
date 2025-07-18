@@ -6,7 +6,6 @@ const PLAYER = preload("res://scenes/player/player.tscn")
 var rooms: Dictionary[Vector2i, Room]
 
 var current_room: Room
-
 var player: Player
 
 var pos_changes: Array[Vector2i] = [Vector2i.UP, Vector2i.LEFT, 
@@ -36,26 +35,26 @@ func _ready() -> void:
 	
 	for pos: Vector2i in pos_list:
 		var room: Room = ROOM.instantiate()
+		room.init()
 		room.pos = pos
 		rooms.set(pos, room)
 	
-	current_room = rooms.get(Vector2i.ZERO)
-	add_child(current_room)
-	for i in range (pos_changes.size()):
-			var neighb_pos: Vector2i = current_room.pos + pos_changes[i]
-			if rooms.has(neighb_pos):
-				current_room.add_door(i, rooms.get(neighb_pos))
+	for room in rooms.values():
+		for i in range (pos_changes.size()):
+				var neighb_pos: Vector2i = room.pos + pos_changes[i]
+				if rooms.has(neighb_pos):
+					room.add_door(i, rooms.get(neighb_pos))
 	
 	player = PLAYER.instantiate()
 	player.position = Vector2(100, 100)
+	current_room = rooms.get(Vector2i.ZERO)
 	current_room.add_child(player)
+	add_child(current_room)
 	
 	Events.room_change.connect(_on_room_change)
 
 # A lot of redundant work, very much not good
-func _on_room_change(new_room_pos: Vector2i, side_entered: int):
-	var new_room: Room = rooms.get(new_room_pos)
-	
+func _on_room_change(new_room: Room, side_entered: int):
 	var screen_center: Vector2 = get_viewport().get_visible_rect().size / 2
 	player.position = screen_center * 2 - player.position + Vector2(pos_changes[side_entered]) * 10
 	
@@ -65,13 +64,6 @@ func _on_room_change(new_room_pos: Vector2i, side_entered: int):
 	remove_child(current_room)
 	add_child(new_room)
 	current_room = new_room
-	
-	for i in range (pos_changes.size()):
-			var neighb_pos: Vector2i = current_room.pos + pos_changes[i]
-			if rooms.has(neighb_pos):
-				current_room.add_door(i, rooms.get(neighb_pos))
-	
-	# current_room.decorate(randi_range(1, 3)) # The Schizophrenia update
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
