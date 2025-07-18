@@ -32,31 +32,32 @@ func _ready() -> void:
 	tile_map_layer_3.set_cell(Vector2i(8, 8), 0, Vector2i(1, 4))
 	tile_map_layer_3.set_cell(Vector2i(9, 8), 0, Vector2i(1, 4))
 	
-	# Decorations 1
-	tile_map_layer_4.set_cell(Vector2i(13, 6), 0, Vector2i(8, 6))
-	tile_map_layer_4.set_cell(Vector2i(14, 6), 0, Vector2i(7, 7))
-	tile_map_layer_4.set_cell(Vector2i(14, 5), 0, Vector2i(8, 6))
-	
-	# Decorations 2
-	tile_map_layer_4.set_cell(Vector2i(3, 3), 0, Vector2i(8, 3))
-	
-	# Decorations 3
-	tile_map_layer_4.set_cell(Vector2i(6, 1), 0, Vector2i(0, 9))
-	var pos: Vector2 = tile_map_layer_4.map_to_local(Vector2i(6, 1))
-	var point_light: PointLight2D = PointLight2D.new()
-	point_light.texture = preload("res://assets/2d_lights_and_shadows_neutral_point_light.webp")
-	point_light.position = pos
-	point_light.texture_scale = 0.2
-	add_child(point_light)
-	
-	tile_map_layer_4.set_cell(Vector2i(11, 1), 0, Vector2i(0, 9))
-	pos = tile_map_layer_4.map_to_local(Vector2i(11, 1))
-	point_light = PointLight2D.new()
-	point_light.texture = preload("res://assets/2d_lights_and_shadows_neutral_point_light.webp")
-	point_light.position = pos
-	point_light.texture_scale = 0.2
-	add_child(point_light)
+	decorate(randi_range(1, 3))
 
+func decorate(variation: int) -> void:
+	match variation:
+		1:
+			tile_map_layer_4.set_cell(Vector2i(13, 6), 0, Vector2i(8, 6))
+			tile_map_layer_4.set_cell(Vector2i(14, 6), 0, Vector2i(7, 7))
+			tile_map_layer_4.set_cell(Vector2i(14, 5), 0, Vector2i(8, 6))
+		2:
+			tile_map_layer_4.set_cell(Vector2i(3, 3), 0, Vector2i(8, 3))
+		3:
+			tile_map_layer_4.set_cell(Vector2i(6, 1), 0, Vector2i(0, 9))
+			var pos: Vector2 = tile_map_layer_4.map_to_local(Vector2i(6, 1))
+			var point_light: PointLight2D = PointLight2D.new()
+			point_light.texture = preload("res://assets/2d_lights_and_shadows_neutral_point_light.webp")
+			point_light.position = pos
+			point_light.texture_scale = 0.2
+			add_child(point_light)
+			
+			tile_map_layer_4.set_cell(Vector2i(11, 1), 0, Vector2i(0, 9))
+			pos = tile_map_layer_4.map_to_local(Vector2i(11, 1))
+			point_light = PointLight2D.new()
+			point_light.texture = preload("res://assets/2d_lights_and_shadows_neutral_point_light.webp")
+			point_light.position = pos
+			point_light.texture_scale = 0.2
+			add_child(point_light)
 
 func _process(delta: float) -> void:
 	pass

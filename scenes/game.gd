@@ -52,7 +52,7 @@ func _ready() -> void:
 	
 	Events.room_change.connect(_on_room_change)
 
-# A lot of redundant work
+# A lot of redundant work, very much not good
 func _on_room_change(new_room_pos: Vector2i, side_entered: int):
 	var new_room: Room = rooms.get(new_room_pos)
 	
@@ -70,6 +70,8 @@ func _on_room_change(new_room_pos: Vector2i, side_entered: int):
 			var neighb_pos: Vector2i = current_room.pos + pos_changes[i]
 			if rooms.has(neighb_pos):
 				current_room.add_door(i, rooms.get(neighb_pos))
+	
+	# current_room.decorate(randi_range(1, 3)) # The Schizophrenia update
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
