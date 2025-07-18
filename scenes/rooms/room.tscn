@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=4 uid="uid://c5t5dxlco73u2"]
+[gd_scene load_steps=14 format=4 uid="uid://c5t5dxlco73u2"]
 
 [ext_resource type="Texture2D" uid="uid://dyy8p0fy0csjm" path="res://assets/Dungeon_Tileset.png" id="1_l8042"]
 [ext_resource type="Script" uid="uid://c1e87wqvl5mfm" path="res://scenes/rooms/room.gd" id="1_xlkwu"]
-[ext_resource type="PackedScene" uid="uid://b3cnu0dlr6lf2" path="res://scenes/player/player.tscn" id="4_1fuux"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kxljb"]
 texture = ExtResource("1_l8042")
@@ -474,6 +473,3 @@ shape = SubResource("RectangleShape2D_y1kpu")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(273.25, 81)
 shape = SubResource("RectangleShape2D_y1kpu")
-
-[node name="Player" parent="." instance=ExtResource("4_1fuux")]
-position = Vector2(142, 78)

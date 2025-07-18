@@ -1,8 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://b3cnu0dlr6lf2"]
+[gd_scene load_steps=35 format=3 uid="uid://b3cnu0dlr6lf2"]
 
 [ext_resource type="Texture2D" uid="uid://cxk428dyp8wfa" path="res://scenes/player/assets/Soldier.png" id="1_8afob"]
 [ext_resource type="Script" uid="uid://c8m0p8dc0ffyt" path="res://scenes/player/player.gd" id="1_dovo2"]
 [ext_resource type="Script" uid="uid://cd3vbeburlqhc" path="res://scenes/components/hitbox_comp.gd" id="3_gmlin"]
+[ext_resource type="Script" uid="uid://d32nos4hjn0xj" path="res://scenes/components/hurtbox_comp.gd" id="4_p47bc"]
+[ext_resource type="Script" uid="uid://d3jb65rew2qhp" path="res://scenes/components/health_comp.gd" id="5_75vfm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dovo2"]
 atlas = ExtResource("1_8afob")
@@ -204,6 +206,10 @@ size = Vector2(21, 22)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlin"]
 size = Vector2(21, 22)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0owmy"]
+radius = 6.0
+height = 16.0
+
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_dovo2")
@@ -233,3 +239,17 @@ position = Vector2(-10.5, 0)
 shape = SubResource("RectangleShape2D_gmlin")
 disabled = true
 debug_color = Color(0.7, 0, 0, 0.215686)
+
+[node name="HurtboxComp" type="Area2D" parent="."]
+script = ExtResource("4_p47bc")
+metadata/_custom_type_script = "uid://d32nos4hjn0xj"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComp"]
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_0owmy")
+debug_color = Color(0.641667, 0, 0.7, 0.196078)
+
+[node name="HealthComp" type="Node" parent="." node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("5_75vfm")
+hurtbox = NodePath("../HurtboxComp")
+metadata/_custom_type_script = "uid://d3jb65rew2qhp"
