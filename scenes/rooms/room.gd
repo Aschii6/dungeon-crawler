@@ -5,15 +5,10 @@ extends Node2D
 @onready var tile_map_layer_3: TileMapLayer = $TileMapLayer3
 @onready var tile_map_layer_4: TileMapLayer = $TileMapLayer4
 
-@onready var top_door: Door = $TopDoor
-@onready var left_door: Door = $LeftDoor
-@onready var bottom_door: Door = $BottomDoor
-@onready var right_door: Door = $RightDoor
-
-@onready var top_door_collision_shape_2d: CollisionShape2D = $TopDoor/CollisionShape2D
-@onready var left_door_collision_shape_2d: CollisionShape2D = $LeftDoor/CollisionShape2D
-@onready var bottom_door_collision_shape_2d: CollisionShape2D = $BottomDoor/CollisionShape2D
-@onready var right_door_collision_shape_2d: CollisionShape2D = $RightDoor/CollisionShape2D
+@onready var top_door: Door = $Doors/TopDoor
+@onready var left_door: Door = $Doors/LeftDoor
+@onready var bottom_door: Door = $Doors/BottomDoor
+@onready var right_door: Door = $Doors/RightDoor
 
 # Walkable tiles (2,2) -> (15, 7)
 
