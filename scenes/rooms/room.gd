@@ -1,26 +1,26 @@
+class_name Room
 extends Node2D
 
 @onready var tile_map_layer_2: TileMapLayer = $TileMapLayer2
 @onready var tile_map_layer_3: TileMapLayer = $TileMapLayer3
 @onready var tile_map_layer_4: TileMapLayer = $TileMapLayer4
 
+@onready var top_door: Door = $TopDoor
+@onready var left_door: Door = $LeftDoor
+@onready var bottom_door: Door = $BottomDoor
+@onready var right_door: Door = $RightDoor
+
+@onready var top_door_collision_shape_2d: CollisionShape2D = $TopDoor/CollisionShape2D
+@onready var left_door_collision_shape_2d: CollisionShape2D = $LeftDoor/CollisionShape2D
+@onready var bottom_door_collision_shape_2d: CollisionShape2D = $BottomDoor/CollisionShape2D
+@onready var right_door_collision_shape_2d: CollisionShape2D = $RightDoor/CollisionShape2D
+
+# Walkable tiles (2,2) -> (15, 7)
+
+var pos: Vector2i = Vector2i(0, 0)
+var is_cleared: bool = true # Change base to false
+
 func _ready() -> void:
-	# Left door
-	tile_map_layer_2.set_cell(Vector2i(1, 4), 0, Vector2i(8, 4))
-	tile_map_layer_2.set_cell(Vector2i(1, 5), 0, Vector2i(8, 5))
-	
-	# Right door
-	tile_map_layer_2.set_cell(Vector2i(16, 4), 0, Vector2i(7, 4))
-	tile_map_layer_2.set_cell(Vector2i(16, 5), 0, Vector2i(7, 5))
-	
-	# Up door
-	tile_map_layer_2.set_cell(Vector2i(8, 1), 0, Vector2i(6, 3))
-	tile_map_layer_2.set_cell(Vector2i(9, 1), 0, Vector2i(7, 3))
-	
-	# Down door
-	tile_map_layer_3.set_cell(Vector2i(8, 8), 0, Vector2i(6, 3))
-	tile_map_layer_3.set_cell(Vector2i(9, 8), 0, Vector2i(7, 3))
-	
 	# Left wall
 	tile_map_layer_2.set_cell(Vector2i(1, 4), 0, Vector2i(0, 3))
 	tile_map_layer_2.set_cell(Vector2i(1, 5), 0, Vector2i(0, 3))
@@ -65,3 +65,30 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	pass
+
+
+## side: 0 - top, 1 - left, 2 - bottom, 3 - right
+func add_door(side: int, room_leading_to: Room):
+	var door: Door
+	var pos_change: Vector2i
+	if side == 0:
+		door = top_door; pos_change = Vector2i.UP
+		tile_map_layer_2.set_cell(Vector2i(8, 1), 0, Vector2i(6, 3))
+		tile_map_layer_2.set_cell(Vector2i(9, 1), 0, Vector2i(7, 3))
+	elif side == 1:
+		door = left_door; pos_change = Vector2i.LEFT
+		tile_map_layer_2.set_cell(Vector2i(1, 4), 0, Vector2i(8, 4))
+		tile_map_layer_2.set_cell(Vector2i(1, 5), 0, Vector2i(8, 5))
+	elif side == 2:
+		door = bottom_door; pos_change = Vector2i.DOWN
+		tile_map_layer_3.set_cell(Vector2i(8, 8), 0, Vector2i(6, 3))
+		tile_map_layer_3.set_cell(Vector2i(9, 8), 0, Vector2i(7, 3))
+	elif side == 3:
+		door = right_door; pos_change = Vector2i.RIGHT
+		tile_map_layer_2.set_cell(Vector2i(16, 4), 0, Vector2i(7, 4))
+		tile_map_layer_2.set_cell(Vector2i(16, 5), 0, Vector2i(7, 5))
+	
+	door.room_inside = self
+	door.side = side
+	door.room_pos_leading_to = pos + pos_change
+	door.enable()

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://do4a8uahhhdqh"]
+
+[ext_resource type="Script" uid="uid://c42uelitngvqy" path="res://scenes/rooms/door.gd" id="1_sxth3"]
+
+[node name="Door" type="Area2D"]
+script = ExtResource("1_sxth3")
