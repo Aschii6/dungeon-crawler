@@ -13,7 +13,7 @@ extends Node2D
 # Walkable tiles (2,2) -> (15, 7)
 
 var pos: Vector2i = Vector2i(0, 0)
-var is_cleared: bool = true # Change base to false
+var is_cleared: bool = false
 
 func _ready() -> void:
 	pass
@@ -78,21 +78,20 @@ func add_door(side: int, room_leading_to: Room):
 	var tml3: Node = get_node("TileMapLayer3")
 	
 	var door: Door
-	var pos_change: Vector2i
 	if side == 0:
-		door = get_node("Doors/TopDoor"); pos_change = Vector2i.UP
+		door = get_node("Doors/TopDoor");
 		tml2.set_cell(Vector2i(8, 1), 0, Vector2i(6, 3))
 		tml2.set_cell(Vector2i(9, 1), 0, Vector2i(7, 3))
 	elif side == 1:
-		door = get_node("Doors/LeftDoor"); pos_change = Vector2i.LEFT
+		door = get_node("Doors/LeftDoor");
 		tml2.set_cell(Vector2i(1, 4), 0, Vector2i(8, 4))
 		tml2.set_cell(Vector2i(1, 5), 0, Vector2i(8, 5))
 	elif side == 2:
-		door = get_node("Doors/BottomDoor"); pos_change = Vector2i.DOWN
+		door = get_node("Doors/BottomDoor");
 		tml3.set_cell(Vector2i(8, 8), 0, Vector2i(6, 3))
 		tml3.set_cell(Vector2i(9, 8), 0, Vector2i(7, 3))
 	elif side == 3:
-		door = get_node("Doors/RightDoor"); pos_change = Vector2i.RIGHT
+		door = get_node("Doors/RightDoor");
 		tml2.set_cell(Vector2i(16, 4), 0, Vector2i(7, 4))
 		tml2.set_cell(Vector2i(16, 5), 0, Vector2i(7, 5))
 	

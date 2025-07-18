@@ -225,6 +225,8 @@ shape = SubResource("RectangleShape2D_j4nxn")
 debug_color = Color(0, 0.595, 0.7, 0.215686)
 
 [node name="HitboxComp" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource("3_gmlin")
 metadata/_custom_type_script = "uid://cd3vbeburlqhc"
 
@@ -241,6 +243,7 @@ disabled = true
 debug_color = Color(0.7, 0, 0, 0.215686)
 
 [node name="HurtboxComp" type="Area2D" parent="."]
+collision_mask = 0
 script = ExtResource("4_p47bc")
 metadata/_custom_type_script = "uid://d32nos4hjn0xj"
 

@@ -50,6 +50,7 @@ script = ExtResource("1_wiyby")
 sprite_frames = SubResource("SpriteFrames_bgkb5")
 
 [node name="HitboxComp" type="Area2D" parent="."]
+collision_layer = 0
 script = ExtResource("2_wiyby")
 damage = 5.0
 metadata/_custom_type_script = "uid://cd3vbeburlqhc"

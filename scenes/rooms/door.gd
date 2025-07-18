@@ -6,9 +6,6 @@ var side: int # 0 top, 1 left, 2 bottom, 3 right
 
 var room_leading_to: Room
 
-func _ready() -> void:
-	pass
-
 func enable() -> void:
 	if not area_entered.is_connected(_on_area_entered):
 		area_entered.connect(_on_area_entered)

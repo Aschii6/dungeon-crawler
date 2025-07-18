@@ -39,7 +39,7 @@ func _ready() -> void:
 		room.pos = pos
 		rooms.set(pos, room)
 	
-	for room in rooms.values():
+	for room: Room in rooms.values():
 		for i in range (pos_changes.size()):
 				var neighb_pos: Vector2i = room.pos + pos_changes[i]
 				if rooms.has(neighb_pos):
@@ -48,6 +48,7 @@ func _ready() -> void:
 	player = PLAYER.instantiate()
 	player.position = Vector2(100, 100)
 	current_room = rooms.get(Vector2i.ZERO)
+	current_room.is_cleared = true
 	current_room.add_child(player)
 	add_child(current_room)
 	

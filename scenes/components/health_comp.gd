@@ -25,7 +25,6 @@ func _on_hurtbox_hurt(hitbox: HitboxComp) -> void:
 	hp -= hitbox.damage
 	if hp <= 0:
 		dead.emit()
-	print_debug(hp)
 
 func _process(delta: float) -> void:
 	if invulnerable_countdown > 0:
