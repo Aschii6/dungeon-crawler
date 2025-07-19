@@ -24,6 +24,7 @@ func _on_area_exited(area):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if near_chest and Input.is_action_just_pressed("interact"):
+		Events.play_sfx.emit("res://assets/01_chest_open_1.wav")
 		remove_child(area_2d)
 		var tween: Tween = create_tween()
 		tween.tween_property(self, "modulate:a", 0.0, 1.0)

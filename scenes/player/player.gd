@@ -68,6 +68,15 @@ func _launch_attack() -> void:
 	if current_state == STATE.SWORD_SWING:
 		return
 	
+	var timer: Timer = Timer.new()
+	add_child(timer)
+	timer.start(0.5) # A little to hard-coded
+	timer.timeout.connect(
+		func():
+			Events.play_sfx.emit("res://assets/07_human_atk_sword_1.wav")
+			timer.queue_free()
+	)
+	
 	current_state = STATE.SWORD_SWING
 	speed_debuff = 0.8
 	animated_sprite_2d.play("sword_swing")

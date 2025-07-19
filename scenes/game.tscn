@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dhps8fhw03r0c"]
+[gd_scene load_steps=9 format=3 uid="uid://dhps8fhw03r0c"]
 
 [ext_resource type="Script" uid="uid://bcwi65xr2diku" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://c4ax2xh7ty7xp" path="res://assets/HealthBar.png" id="2_yqjtg"]
 [ext_resource type="FontFile" uid="uid://bavxyl7yu27rf" path="res://assets/Kenney Pixel.ttf" id="3_lnu2h"]
+[ext_resource type="AudioStream" uid="uid://b01nntb55kf6m" path="res://assets/Goblins_Dance_(Battle).wav" id="4_lbhrr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lnu2h"]
 atlas = ExtResource("2_yqjtg")
@@ -54,3 +55,10 @@ offset_right = 20.0
 offset_bottom = 23.0
 grow_horizontal = 2
 label_settings = SubResource("LabelSettings_lbhrr")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_lbhrr")
+autoplay = true
+
+[node name="AudioStreamPlayer2D2" type="AudioStreamPlayer2D" parent="."]
+volume_db = -10.0

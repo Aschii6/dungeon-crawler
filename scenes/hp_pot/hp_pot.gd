@@ -23,4 +23,5 @@ func _on_area_exited(area):
 func _process(delta: float) -> void:
 	if near_pot and Input.is_action_just_pressed("interact"):
 		Events.heal_player.emit(heal_amount)
+		Events.play_sfx.emit("res://assets/heal.wav")
 		queue_free()

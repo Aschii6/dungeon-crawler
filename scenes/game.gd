@@ -7,6 +7,9 @@ const GAME_OVER_SCREEN = preload("res://scenes/game_over_screen.tscn")
 @onready var texture_progress_bar: TextureProgressBar = $Control/MarginContainer/TextureProgressBar
 @onready var label: Label = $Control/Label
 
+@onready var asp: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var asp2: AudioStreamPlayer2D = $AudioStreamPlayer2D2
+
 var rooms: Dictionary[Vector2i, Room]
 var num_rooms_cleared: int = 1
 
@@ -17,6 +20,14 @@ var pos_changes: Array[Vector2i] = [Vector2i.UP, Vector2i.LEFT,
 		Vector2i.DOWN, Vector2i.RIGHT]
 
 func _ready() -> void:
+	asp.play()
+	asp.finished.connect(func(): asp.play())
+	
+	Events.play_sfx.connect(func(path: String):
+		asp2.stream = load(path)
+		asp2.play()
+	)
+	
 	var pos_stack: Array[Vector2i]
 	var pos_list: Array[Vector2i]
 	

@@ -1,7 +1,7 @@
 class_name HealthComp
 extends Node
 
-signal dead # Need?
+signal dead
 signal hp_changed(new_value: int)
 
 @export var hurtbox: HurtboxComp
@@ -27,6 +27,7 @@ func _on_hurtbox_hurt(hitbox: HitboxComp) -> void:
 	
 	current_hp -= hitbox.damage
 	hp_changed.emit(current_hp)
+	Events.play_sfx.emit("res://assets/11_human_damage_2.wav")
 	if current_hp <= 0:
 		dead.emit()
 

@@ -8,3 +8,5 @@ signal player_hp_changed(new_value: int)
 signal room_cleared()
 
 signal heal_player(amount: int)
+
+signal play_sfx(path: String)
