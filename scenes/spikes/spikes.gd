@@ -7,8 +7,8 @@ extends Node2D
 @onready var lower_timer: Timer = $LowerTimer
 
 
-@export var raise_idle_time: float = 2
-@export var lower_idle_time: float = 1
+@export var raise_idle_time: float = 1.5
+@export var lower_idle_time: float = 0.75
 
 func _ready() -> void:
 	raise_timer.timeout.connect(_raise_spikes)

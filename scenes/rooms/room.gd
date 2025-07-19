@@ -1,6 +1,8 @@
 class_name Room
 extends Node2D
 
+const SPIKES = preload("res://scenes/spikes/spikes.tscn")
+
 @onready var tile_map_layer_2: TileMapLayer = $TileMapLayer2
 @onready var tile_map_layer_3: TileMapLayer = $TileMapLayer3
 @onready var tile_map_layer_4: TileMapLayer = $TileMapLayer4
@@ -13,7 +15,7 @@ extends Node2D
 # Walkable tiles (2,2) -> (15, 7)
 
 var pos: Vector2i = Vector2i(0, 0)
-var is_cleared: bool = false
+var is_cleared: bool = true
 
 func _ready() -> void:
 	pass
@@ -36,6 +38,7 @@ func init() -> void:
 	tml3.set_cell(Vector2i(9, 8), 0, Vector2i(1, 4))
 	
 	decorate(randi_range(1, 3))
+	place_spikes()
 
 func decorate(variation: int) -> void:
 	var tml4: Node = get_node("TileMapLayer4")
@@ -49,8 +52,8 @@ func decorate(variation: int) -> void:
 			tml4.set_cell(Vector2i(3, 3), 0, Vector2i(7, 7))
 			tml4.set_cell(Vector2i(4, 3), 0, Vector2i(8, 6))
 		2:
-			tml4.set_cell(Vector2i(3, 3), 0, Vector2i(8, 3))
-			tml4.set_cell(Vector2i(14, 6), 0, Vector2i(8, 3))
+			tml4.set_cell(Vector2i(4, 3), 0, Vector2i(8, 3))
+			tml4.set_cell(Vector2i(13, 6), 0, Vector2i(8, 3))
 			
 			tml4.set_cell(Vector2i(3, 1), 0, Vector2i(4, 7))
 			tml4.set_cell(Vector2i(14, 1), 0, Vector2i(4, 7))
@@ -71,6 +74,20 @@ func decorate(variation: int) -> void:
 			point_light.texture_scale = 0.2
 			add_child(point_light)
 
+func place_spikes():
+	var rng: float = randf()
+	if rng < 0.5: return
+	var tml1: TileMapLayer = get_node("TileMapLayer")
+	if rng < 0.75:
+		for tml_pos: Vector2i in [Vector2i(8, 4), Vector2i(9, 4), Vector2i(8, 5), Vector2i(9, 5)]:
+			var spikes: Spikes = SPIKES.instantiate()
+			spikes.position = tml1.map_to_local(tml_pos)
+			add_child(spikes)
+	else:
+		for tml_pos: Vector2i in [Vector2i(3, 3), Vector2i(3, 6), Vector2i(14, 3), Vector2i(14, 6)]:
+			var spikes: Spikes = SPIKES.instantiate()
+			spikes.position = tml1.map_to_local(tml_pos)
+			add_child(spikes)
 
 ## side: 0 - top, 1 - left, 2 - bottom, 3 - right
 func add_door(side: int, room_leading_to: Room):

@@ -54,7 +54,6 @@ func _ready() -> void:
 	
 	Events.room_change.connect(_on_room_change)
 
-# A lot of redundant work, very much not good
 func _on_room_change(new_room: Room, side_entered: int):
 	var screen_center: Vector2 = get_viewport().get_visible_rect().size / 2
 	player.position = screen_center * 2 - player.position + Vector2(pos_changes[side_entered]) * 10
