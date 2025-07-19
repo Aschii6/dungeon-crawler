@@ -24,7 +24,7 @@ func _ready() -> void:
 	pos_stack.push_back(starting_pos)
 	pos_list.push_back(starting_pos)
 	
-	while not pos_stack.is_empty() and pos_list.size() < 4:
+	while not pos_stack.is_empty() and pos_list.size() < 7:
 		var pos: Vector2i = pos_stack.pop_back()
 		var min: int = 1; var max: int = 4
 		if pos == Vector2i.ZERO: min = 2
