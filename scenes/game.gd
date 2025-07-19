@@ -54,7 +54,7 @@ func _ready() -> void:
 	player.position = Vector2(100, 100)
 	current_room = rooms.get(Vector2i.ZERO)
 	current_room.is_cleared = true
-	current_room.add_child(player)
+	current_room.add_player(player)
 	current_room.change_label_text("WASD - move\nSPACE - attack")
 	add_child(current_room)
 	
@@ -75,8 +75,8 @@ func _on_room_change(new_room: Room, side_entered: int):
 	var screen_center: Vector2 = get_viewport().get_visible_rect().size / 2
 	player.position = screen_center * 2 - player.position + Vector2(pos_changes[side_entered]) * 10
 	
-	current_room.remove_child(player)
-	new_room.add_child(player)
+	current_room.remove_player(player)
+	new_room.add_player(player)
 	
 	remove_child(current_room)
 	add_child(new_room)

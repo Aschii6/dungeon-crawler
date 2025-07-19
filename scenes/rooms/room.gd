@@ -3,6 +3,7 @@ extends Node2D
 
 const SPIKES = preload("res://scenes/spikes/spikes.tscn")
 const SKELETON = preload("res://scenes/enemies/skeleton.tscn")
+const CHEST = preload("res://scenes/chest/chest.tscn")
 
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var tile_map_layer_2: TileMapLayer = $TileMapLayer2
@@ -25,6 +26,8 @@ func _ready() -> void:
 	pass
 
 func spawn_enemies(num: int):
+	var y_sort: Node = get_node("YSort")
+	
 	var tlm: TileMapLayer = get_node("TileMapLayer")
 	for i in range(num):
 		var enemy: Enemy = SKELETON.instantiate()
@@ -37,13 +40,25 @@ func spawn_enemies(num: int):
 		enemy.position = tlm.map_to_local(pos)
 		enemies.push_back(enemy)
 		enemy.enemy_died.connect(_on_enemy_died.bind(enemy))
-		add_child(enemy)
+		y_sort.add_child(enemy)
 
 func _on_enemy_died(enemy: Enemy):
 	enemies.erase(enemy)
 	if enemies.is_empty():
 		is_cleared = true
 		Events.room_cleared.emit()
+		
+		if (randf() < 0.5):
+			spawn_chest()
+
+func spawn_chest():
+	var chest: Chest = CHEST.instantiate()
+	chest.position = tile_map_layer.map_to_local(Vector2i(4, 4))
+	call_deferred("add_chest", chest)
+
+func add_chest(chest: Chest):
+	var y_sort: Node = get_node("YSort")
+	y_sort.add_child(chest)
 
 func init() -> void:
 	var tml2: Node = get_node("TileMapLayer2")
@@ -144,5 +159,14 @@ func add_door(side: int, room_leading_to: Room):
 
 
 func change_label_text(new_text: String):
-	var label: Label = get_node("Control/Label")
+	var label: Label = get_node("Control/MarginContainer/Label")
 	label.text = new_text
+
+
+func add_player(player: Player):
+	var y_sort: Node = get_node("YSort")
+	y_sort.add_child(player)
+
+func remove_player(player: Player):
+	var y_sort: Node = get_node("YSort")
+	y_sort.remove_child(player)

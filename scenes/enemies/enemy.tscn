@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://d3jb65rew2qhp" path="res://scenes/components/health_comp.gd" id="3_38ino"]
 
 [node name="Enemy" type="Node2D"]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_fcftc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

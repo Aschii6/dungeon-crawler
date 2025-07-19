@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://x20tluo8dyeg"]
+
+[ext_resource type="Texture2D" uid="uid://dyy8p0fy0csjm" path="res://assets/Dungeon_Tileset.png" id="1_3se45"]
+[ext_resource type="Script" uid="uid://u2b5aj0cdslf" path="res://scenes/chest/chest.gd" id="1_uih34"]
+[ext_resource type="FontFile" uid="uid://cdqukdx427n8c" path="res://assets/Kenney Blocks.ttf" id="3_m5ma0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uih34"]
+atlas = ExtResource("1_3se45")
+region = Rect2(64, 128, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_uih34"]
+radius = 14.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_vdnua"]
+font = ExtResource("3_m5ma0")
+font_size = 8
+
+[node name="Chest" type="Node2D"]
+z_index = 1
+y_sort_enabled = true
+script = ExtResource("1_uih34")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_uih34")
+
+[node name="Area2D" type="Area2D" parent="."]
+z_index = 1
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_uih34")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_vdnua")
