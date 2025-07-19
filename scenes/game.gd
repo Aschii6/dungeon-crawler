@@ -55,15 +55,21 @@ func _ready() -> void:
 	current_room = rooms.get(Vector2i.ZERO)
 	current_room.is_cleared = true
 	current_room.add_child(player)
+	current_room.change_label_text("WASD - move\nSPACE - attack")
 	add_child(current_room)
 	
 	Events.room_change.connect(_on_room_change)
 	Events.player_hp_changed.connect(
-		func(new_value: int): texture_progress_bar.value = new_value
+		func(new_value: int): 
+			texture_progress_bar.value = new_value
+			if new_value <= 0:
+				call_deferred("change_to_game_over")
 	)
 	
 	Events.room_cleared.connect(_on_room_cleared)
 
+func change_to_game_over():
+	get_tree().change_scene_to_packed(preload("res://scenes/game_over_screen.tscn"))
 
 func _on_room_change(new_room: Room, side_entered: int):
 	var screen_center: Vector2 = get_viewport().get_visible_rect().size / 2

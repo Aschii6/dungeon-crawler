@@ -141,3 +141,8 @@ func add_door(side: int, room_leading_to: Room):
 	door.side = side
 	door.room_leading_to = room_leading_to
 	door.enable()
+
+
+func change_label_text(new_text: String):
+	var label: Label = get_node("Control/Label")
+	label.text = new_text
