@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://c42uelitngvqy" path="res://scenes/rooms/door.gd" id="1_sxth3"]
 
 [node name="Door" type="Area2D"]
+collision_layer = 0
 script = ExtResource("1_sxth3")

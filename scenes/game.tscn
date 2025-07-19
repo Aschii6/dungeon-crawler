@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dhps8fhw03r0c"]
+[gd_scene load_steps=8 format=3 uid="uid://dhps8fhw03r0c"]
 
 [ext_resource type="Script" uid="uid://bcwi65xr2diku" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://c4ax2xh7ty7xp" path="res://assets/HealthBar.png" id="2_yqjtg"]
+[ext_resource type="FontFile" uid="uid://bavxyl7yu27rf" path="res://assets/Kenney Pixel.ttf" id="3_lnu2h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lnu2h"]
 atlas = ExtResource("2_yqjtg")
@@ -15,6 +16,9 @@ region = Rect2(0, 0, 80, 16)
 atlas = ExtResource("2_yqjtg")
 region = Rect2(0, 16, 80, 16)
 
+[sub_resource type="LabelSettings" id="LabelSettings_lbhrr"]
+font = ExtResource("3_lnu2h")
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_uwrxv")
 
@@ -24,13 +28,29 @@ anchors_preset = 0
 offset_right = 288.0
 offset_bottom = 160.0
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="Control"]
-z_index = 2
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
 layout_mode = 0
-offset_right = 40.0
+offset_left = 4.0
+offset_right = 84.0
 offset_bottom = 40.0
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control/MarginContainer"]
+z_index = 2
+layout_mode = 2
 value = 100.0
 texture_under = SubResource("AtlasTexture_lnu2h")
 texture_over = SubResource("AtlasTexture_lbhrr")
 texture_progress = SubResource("AtlasTexture_iywne")
 tint_progress = Color(0, 1, 0, 1)
+
+[node name="Label" type="Label" parent="Control"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_lbhrr")

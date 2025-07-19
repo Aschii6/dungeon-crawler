@@ -207,8 +207,8 @@ size = Vector2(21, 22)
 size = Vector2(21, 22)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0owmy"]
-radius = 6.0
-height = 16.0
+radius = 5.0
+height = 14.0
 
 [node name="Player" type="CharacterBody2D"]
 motion_mode = 1
@@ -228,6 +228,7 @@ debug_color = Color(0, 0.595, 0.7, 0.215686)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("3_gmlin")
+damage = 10.0
 metadata/_custom_type_script = "uid://cd3vbeburlqhc"
 
 [node name="SwordRightCollisionShape2D" type="CollisionShape2D" parent="HitboxComp"]
@@ -250,7 +251,7 @@ metadata/_custom_type_script = "uid://d32nos4hjn0xj"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComp"]
 position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_0owmy")
-debug_color = Color(0.641667, 0, 0.7, 0.196078)
+debug_color = Color(0.7, 0.128333, 0, 0.196078)
 
 [node name="HealthComp" type="Node" parent="." node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("5_75vfm")

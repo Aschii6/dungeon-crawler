@@ -3,7 +3,8 @@ extends Node2D
 const ROOM = preload("res://scenes/rooms/room.tscn")
 const PLAYER = preload("res://scenes/player/player.tscn")
 
-@onready var texture_progress_bar: TextureProgressBar = $Control/TextureProgressBar
+@onready var texture_progress_bar: TextureProgressBar = $Control/MarginContainer/TextureProgressBar
+@onready var label: Label = $Control/Label
 
 var rooms: Dictionary[Vector2i, Room]
 
@@ -40,6 +41,8 @@ func _ready() -> void:
 		room.init()
 		room.pos = pos
 		rooms.set(pos, room)
+		if pos != Vector2i.ZERO:
+			room.spawn_enemies(randi_range(2, 5))
 	
 	for room: Room in rooms.values():
 		for i in range (pos_changes.size()):
@@ -58,6 +61,9 @@ func _ready() -> void:
 	Events.player_hp_changed.connect(
 		func(new_value: int): texture_progress_bar.value = new_value
 	)
+	
+	Events.room_cleared.connect(_on_room_cleared)
+
 
 func _on_room_change(new_room: Room, side_entered: int):
 	var screen_center: Vector2 = get_viewport().get_visible_rect().size / 2
@@ -70,6 +76,23 @@ func _on_room_change(new_room: Room, side_entered: int):
 	add_child(new_room)
 	current_room = new_room
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+
+func _on_room_cleared():
+	label.text = "Room Cleared"
+	var timer: Timer = Timer.new()
+	add_child(timer)
+	timer.start(1.5)
+	await timer.timeout
+	remove_child(timer)
+	label.text = ""
+
+
+func _physics_process(delta: float) -> void:
+	for enemy: Enemy in current_room.enemies:
+		if enemy.is_dead: continue
+		
+		var direction: Vector2 = (player.position - enemy.position).normalized()
+		if direction.x < 0: enemy.set_flip_v(true)
+		else: enemy.set_flip_v(false)
+		
+		enemy.position += direction * 20 * delta

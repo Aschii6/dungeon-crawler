@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://dktrifm3h54i"]
+
+[ext_resource type="Script" uid="uid://cd3vbeburlqhc" path="res://scenes/components/hitbox_comp.gd" id="1_8e3ao"]
+[ext_resource type="Script" uid="uid://bw68q6h1jge8k" path="res://scenes/enemies/enemy.gd" id="1_fcftc"]
+[ext_resource type="Script" uid="uid://d32nos4hjn0xj" path="res://scenes/components/hurtbox_comp.gd" id="2_38ino"]
+[ext_resource type="Script" uid="uid://d3jb65rew2qhp" path="res://scenes/components/health_comp.gd" id="3_38ino"]
+
+[node name="Enemy" type="Node2D"]
+script = ExtResource("1_fcftc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="HitboxComp" type="Area2D" parent="."]
+collision_layer = 0
+script = ExtResource("1_8e3ao")
+metadata/_custom_type_script = "uid://cd3vbeburlqhc"
+
+[node name="HurtboxComp" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_38ino")
+metadata/_custom_type_script = "uid://d32nos4hjn0xj"
+
+[node name="HealthComp" type="Node" parent="." node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("3_38ino")
+hurtbox = NodePath("../HurtboxComp")
+metadata/_custom_type_script = "uid://d3jb65rew2qhp"

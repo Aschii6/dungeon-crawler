@@ -2,7 +2,9 @@ class_name Room
 extends Node2D
 
 const SPIKES = preload("res://scenes/spikes/spikes.tscn")
+const SKELETON = preload("res://scenes/enemies/skeleton.tscn")
 
+@onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var tile_map_layer_2: TileMapLayer = $TileMapLayer2
 @onready var tile_map_layer_3: TileMapLayer = $TileMapLayer3
 @onready var tile_map_layer_4: TileMapLayer = $TileMapLayer4
@@ -15,10 +17,33 @@ const SPIKES = preload("res://scenes/spikes/spikes.tscn")
 # Walkable tiles (2,2) -> (15, 7)
 
 var pos: Vector2i = Vector2i(0, 0)
-var is_cleared: bool = true
+var is_cleared: bool = false
+
+var enemies: Array[Enemy]
 
 func _ready() -> void:
 	pass
+
+func spawn_enemies(num: int):
+	var tlm: TileMapLayer = get_node("TileMapLayer")
+	for i in range(num):
+		var enemy: Enemy = SKELETON.instantiate()
+		var possible_pos: Array[Vector2] = [Vector2(14, 3), Vector2(13, 3), Vector2(3, 3), Vector2(4, 3), 
+			Vector2(3, 6), Vector2(4, 6), Vector2(13, 6), Vector2(14, 6)]
+			
+		var pos: Vector2 = possible_pos.pick_random()
+		possible_pos.erase(pos)
+		
+		enemy.position = tlm.map_to_local(pos)
+		enemies.push_back(enemy)
+		enemy.enemy_died.connect(_on_enemy_died.bind(enemy))
+		add_child(enemy)
+
+func _on_enemy_died(enemy: Enemy):
+	enemies.erase(enemy)
+	if enemies.is_empty():
+		is_cleared = true
+		Events.room_cleared.emit()
 
 func init() -> void:
 	var tml2: Node = get_node("TileMapLayer2")
