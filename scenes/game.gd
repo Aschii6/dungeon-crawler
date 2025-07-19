@@ -22,9 +22,9 @@ func _ready() -> void:
 	pos_stack.push_back(starting_pos)
 	pos_list.push_back(starting_pos)
 	
-	while not pos_stack.is_empty() and pos_list.size() < 12:
+	while not pos_stack.is_empty() and pos_list.size() < 8:
 		var pos: Vector2i = pos_stack.pop_back()
-		var min: int = 0; var max: int = 4
+		var min: int = 1; var max: int = 4
 		if pos == Vector2i.ZERO: min = 2
 		var num_neighb: int = randi_range(min, max)
 		
@@ -73,7 +73,7 @@ func change_to_game_over():
 
 func _on_room_change(new_room: Room, side_entered: int):
 	var screen_center: Vector2 = get_viewport().get_visible_rect().size / 2
-	player.position = screen_center * 2 - player.position + Vector2(pos_changes[side_entered]) * 10
+	player.position = screen_center * 2 - player.position + Vector2(pos_changes[side_entered]) * 8
 	
 	current_room.remove_player(player)
 	new_room.add_player(player)

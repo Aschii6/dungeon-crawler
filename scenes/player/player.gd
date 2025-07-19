@@ -18,6 +18,8 @@ func _ready() -> void:
 	health_comp.hp_changed.connect(
 		func(new_value: int): Events.player_hp_changed.emit(new_value)
 	)
+	
+	Events.heal_player.connect(health_comp.heal)
 
 func _physics_process(delta: float) -> void:
 	_process_movement()

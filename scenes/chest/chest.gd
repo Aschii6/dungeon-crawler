@@ -1,6 +1,8 @@
 class_name Chest
 extends Node2D
 
+const HP_POT = preload("res://scenes/hp_pot/hp_pot.tscn")
+
 @onready var area_2d: Area2D = $Area2D
 @onready var label: Label = $Control/Label
 
@@ -26,4 +28,7 @@ func _process(delta: float) -> void:
 		var tween: Tween = create_tween()
 		tween.tween_property(self, "modulate:a", 0.0, 1.0)
 		await tween.finished
+		var hp_pot: HpPot = HP_POT.instantiate()
+		hp_pot.position = position
+		get_parent().add_child(hp_pot)
 		queue_free()

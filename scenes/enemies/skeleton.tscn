@@ -234,5 +234,5 @@ shape = SubResource("RectangleShape2D_038oa")
 debug_color = Color(0.7, 0, 0, 0.196078)
 
 [node name="HealthComp" parent="." index="3"]
-hp = 20
+max_hp = 20
 invulnerability_period = 0.5
