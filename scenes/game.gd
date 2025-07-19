@@ -3,6 +3,8 @@ extends Node2D
 const ROOM = preload("res://scenes/rooms/room.tscn")
 const PLAYER = preload("res://scenes/player/player.tscn")
 
+@onready var texture_progress_bar: TextureProgressBar = $Control/TextureProgressBar
+
 var rooms: Dictionary[Vector2i, Room]
 
 var current_room: Room
@@ -53,6 +55,9 @@ func _ready() -> void:
 	add_child(current_room)
 	
 	Events.room_change.connect(_on_room_change)
+	Events.player_hp_changed.connect(
+		func(new_value: int): texture_progress_bar.value = new_value
+	)
 
 func _on_room_change(new_room: Room, side_entered: int):
 	var screen_center: Vector2 = get_viewport().get_visible_rect().size / 2

@@ -5,12 +5,19 @@ extends CharacterBody2D
 @onready var sword_right_collision_shape_2d: CollisionShape2D = $HitboxComp/SwordRightCollisionShape2D
 @onready var sword_left_collision_shape_2d: CollisionShape2D = $HitboxComp/SwordLeftCollisionShape2D
 
+@onready var health_comp: HealthComp = $HealthComp
+
 const SPEED = 90.0
 
 enum STATE {IDLE, WALK, SWORD_SWING, HURT}
 var current_state: STATE = STATE.IDLE
 
 var speed_debuff: float = 1 # Between 0 and 1
+
+func _ready() -> void:
+	health_comp.hp_changed.connect(
+		func(new_value: int): Events.player_hp_changed.emit(new_value)
+	)
 
 func _physics_process(delta: float) -> void:
 	_process_movement()
